@@ -4,8 +4,10 @@ const app = express();
 app.use(express.json())
 
 app.post('/payments/sessions', (req, res) => {
-  res.send({
-    test_key: process.env.ADYEN_API_KEY
+  console.log('/payments/sessions called');
+  // process.env.ADYEN_API_KEY
+  return res.json({    
+    hello: 'adyen'    
   });
 });
 

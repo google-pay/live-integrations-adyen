@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express');
 const { Client, CheckoutAPI } = require('@adyen/api-library');
 const uuid = require('uuid');
@@ -9,7 +10,7 @@ const app = express();
 app.use(express.json())
 
 app.post('/payments/sessions', async (req, res) => {
-  console.log('/payments/sessions called');
+  console.log('/payments/sessions called');  
 
   adyenCheckoutApi.PaymentsApi.sessions({
     merchantAccount: 'AdyenRecruitmentCOM',
@@ -18,8 +19,7 @@ app.post('/payments/sessions', async (req, res) => {
       currency: 'EUR'
     },
     returnUrl: 'https://your-company.com/checkout?shopperOrder=12xy..',
-    reference: 'YOUR_PAYMENT_REFERENCE',
-    countryCode: 'NL'
+    reference: uuid.v4()
   }, {
     idempotencyKey: uuid.v4()
   })
@@ -29,7 +29,10 @@ app.post('/payments/sessions', async (req, res) => {
       id: paymentSessionResponse.id
     });
   })
-  .catch(error => console.log(error));
+  .catch(error => {
+    console.log(error)
+    return res.status(500).send(`Unable to call Adyen's /session API`);
+  });
 });
 
 const port = parseInt(process.env.PORT) || 8080;

@@ -1,14 +1,35 @@
 const express = require('express');
+const { Client, CheckoutAPI } = require('@adyen/api-library');
+const uuid = require('uuid');
+
+const adyenClient = new Client({ apiKey: process.env.ADYEN_API_KEY, environment: "TEST" });
+const adyenCheckoutApi = new CheckoutAPI(adyenClient);
 
 const app = express();
 app.use(express.json())
 
-app.post('/payments/sessions', (req, res) => {
+app.post('/payments/sessions', async (req, res) => {
   console.log('/payments/sessions called');
-  // process.env.ADYEN_API_KEY
-  return res.json({    
-    hello: 'adyen'    
-  });
+
+  adyenCheckoutApi.PaymentsApi.sessions({
+    merchantAccount: 'AdyenRecruitmentCOM',
+    amount: {
+      value: 1000,
+      currency: 'EUR'
+    },
+    returnUrl: 'https://your-company.com/checkout?shopperOrder=12xy..',
+    reference: 'YOUR_PAYMENT_REFERENCE',
+    countryCode: 'NL'
+  }, {
+    idempotencyKey: uuid.v4()
+  })
+  .then(paymentSessionResponse => {
+    return res.json({
+      sessionData: paymentSessionResponse.sessionData,
+      id: paymentSessionResponse.id
+    });
+  })
+  .catch(error => console.log(error));
 });
 
 const port = parseInt(process.env.PORT) || 8080;

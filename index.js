@@ -26,7 +26,8 @@ app.post('/payments/sessions', async (req, res) => {
   .then(paymentSessionResponse => {
     return res.json({
       sessionData: paymentSessionResponse.sessionData,
-      id: paymentSessionResponse.id
+      id: paymentSessionResponse.id,
+      clientSecret: process.env.ADYEN_CLIENT_SECRET
     });
   })
   .catch(error => {

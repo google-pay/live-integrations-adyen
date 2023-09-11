@@ -27,7 +27,9 @@ app.post('/payments/sessions', async (req, res) => {
     return res.json({
       sessionData: paymentSessionResponse.sessionData,
       id: paymentSessionResponse.id,
-      clientSecret: process.env.ADYEN_CLIENT_SECRET
+      clientSecret: process.env.ADYEN_CLIENT_SECRET,
+      shopperLocale: 'en-US',
+      environment: 'Environment.TEST'
     });
   })
   .catch(error => {

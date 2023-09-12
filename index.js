@@ -13,7 +13,7 @@ app.post('/payments/sessions', async (req, res) => {
   console.log('/payments/sessions called');  
 
   adyenCheckoutApi.PaymentsApi.sessions({
-    merchantAccount: 'AdyenRecruitmentCOM',
+    merchantAccount: 'Google338ECOM',
     amount: {
       value: 1000,
       currency: 'EUR'

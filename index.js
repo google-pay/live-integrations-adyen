@@ -39,7 +39,7 @@ app.post('/payments/sessions', async (req, res) => {
 });
 
 app.post('/payments/webhook', async (req, res) => {
-  console.log(req.body);    
+  console.log(JSON.stringify(req.body, null, 2));    
   return res.status(200).send('[accepted]');
 });
 

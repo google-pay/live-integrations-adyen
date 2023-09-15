@@ -29,7 +29,8 @@ app.post('/payments/sessions', async (req, res) => {
       id: paymentSessionResponse.id,
       clientSecret: process.env.ADYEN_CLIENT_SECRET,
       shopperLocale: 'en-US',
-      environment: 'Environment.TEST'
+      environment: 'Environment.TEST',
+      merchantName: 'Test merchant'
     });
   })
   .catch(error => {

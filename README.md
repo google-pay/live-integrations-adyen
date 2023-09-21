@@ -1,6 +1,5 @@
 # live-integrations-adyen
-
-Backend source for the livestream on 2023-09-20
+Backend source code for the [YouTube livestream](https://www.youtube.com/watch?v=cbsP0bldDiA) on 2023-09-20
 
 ## Running the server
 1. `npm i`
